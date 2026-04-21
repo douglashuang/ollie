@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ollie 🐾 Care Guide</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #fdf6ec;
+      --brown: #7b4f2e;
+      --brown-light: #a0673a;
+      --amber: #f4a636;
+      --amber-light: #fde9c0;
+      --red: #c0392b;
+      --red-light: #fdecea;
+      --green: #27795b;
+      --green-light: #e4f5ee;
+      --text: #2c2c2c;
+      --muted: #6b6b6b;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    header {
+      position: relative;
+      overflow: hidden;
+      max-height: 340px;
+      background: var(--brown);
+    }
+
+    header img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+      opacity: 0.88;
+    }
+
+    .header-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 20px 24px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.65));
+      color: #fff;
+    }
+
+    .header-overlay h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .header-overlay p {
+      font-size: 1rem;
+      opacity: 0.88;
+      margin-top: 4px;
+    }
+
+    /* ── Layout ── */
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px 16px 60px;
+    }
+
+    section { margin-bottom: 32px; }
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--brown);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h2 .icon { font-size: 1.3rem; }
+
+    /* ── Alert box ── */
+    .alert {
+      background: var(--red-light);
+      border-left: 4px solid var(--red);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      margin-bottom: 10px;
+    }
+
+    .alert h3 {
+      color: var(--red);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .alert ul, .alert ol {
+      padding-left: 20px;
+    }
+
+    .alert li { margin-bottom: 6px; }
+
+    /* ── Info card ── */
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--brown-light);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .card ul, .card ol { padding-left: 20px; }
+    .card li { margin-bottom: 6px; }
+
+    /* ── Success / tip ── */
+    .tip {
+      background: var(--green-light);
+      border-left: 4px solid var(--green);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    /* ── Badge row ── */
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .badge {
+      background: var(--amber-light);
+      color: var(--brown);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: default;
+    }
+
+    /* ── Timeline ── */
+    .timeline { list-style: none; padding: 0; }
+
+    .timeline li {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0e8de;
+    }
+
+    .timeline li:last-child { border-bottom: none; }
+
+    .time-label {
+      min-width: 72px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--amber);
+      padding-top: 2px;
+    }
+
+    /* ── Command cheat sheet ── */
+    details {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--brown);
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    summary::after {
+      content: "﹢";
+      font-size: 1.3rem;
+      color: var(--amber);
+      transition: transform 0.2s;
+    }
+
+    details[open] summary::after { content: "–"; }
+
+    .cmd-body {
+      padding: 0 18px 16px;
+      font-size: 0.95rem;
+    }
+
+    .cmd-body p { margin-bottom: 6px; }
+
+    .cmd-body .meaning {
+      color: var(--muted);
+    }
+
+    .cmd-tag {
+      display: inline-block;
+      background: var(--amber);
+      color: #fff;
+      border-radius: 6px;
+      padding: 2px 9px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    /* ── No / Yes indicators ── */
+    .no  { color: var(--red);   font-weight: 700; }
+    .yes { color: var(--green); font-weight: 700; }
+
+    /* ── Divider ── */
+    hr {
+      border: none;
+      border-top: 2px solid #f0e6d8;
+      margin: 28px 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="ollie.jpeg" alt="Ollie the dog" />
+  <div class="header-overlay">
+    <h1>Ollie 🐾</h1>
+    <p>Everything you need to take great care of him</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── TOP 5 RULES ── -->
+  <section>
+    <h2><span class="icon">🚨</span> Top 5 Rules — Read First</h2>
+    <div class="alert">
+      <h3>These are non-negotiable</h3>
+      <ol>
+        <li>If Ollie is not being actively watched → <strong>put him in the crate</strong></li>
+        <li>🦮 Always leash Ollie indoors</li>
+        <li><span class="no">❌</span> Do NOT let him jump on or off furniture or high surfaces</li>
+        <li>🍽 Do NOT feed more than <strong>8 spoons total per day</strong></li>
+        <li>🐕 No marking and non-potty/poo related smelling</li>
+      </ol>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ── SCHEDULE ── -->
+  <section>
+    <h2><span class="icon">📅</span> Daily Schedule</h2>
+
+    <div class="card">
+      <ul class="timeline" style="list-style:none; padding:0;">
+        <li>
+          <span class="time-label">7–10 AM</span>
+          <span><strong>Wake up</strong> — whenever you wake up</span>
+        </li>
+        <li>
+          <span class="time-label">8:00 AM</span>
+          <span><strong>Breakfast</strong></span>
+        </li>
+        <li>
+          <span class="time-label">After breakfast</span>
+          <span><strong>Morning potty</strong> — typically on the balcony; poo is optional</span>
+        </li>
+        <li>
+          <span class="time-label">1–2 PM</span>
+          <span><strong>Afternoon potty</strong> (optional, if you're home)</span>
+        </li>
+        <li>
+          <span class="time-label">5:00 PM</span>
+          <span><strong>Evening potty</strong> — only if there was no afternoon potty</span>
+        </li>
+        <li>
+          <span class="time-label">6:00 PM</span>
+          <span><strong>Dinner</strong></span>
+        </li>
+        <li>
+          <span class="time-label">After dinner</span>
+          <span><strong>After-dinner potty</strong></span>
+        </li>
+        <li>
+          <span class="time-label">9:00 PM</span>
+          <span><strong>Last potty</strong> of the night</span>
+        </li>
+        <li>
+          <span class="time-label">~11:00 PM</span>
+          <span><strong>Bedtime</strong> — brush if you remember</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ── FEEDING ── -->
+  <section>
+    <h2><span class="icon">🍽</span> Feeding</h2>
+
+    <div class="alert">
+      <h3>⚠️ Max 8 tablespoons total per day</h3>
+      <p>This includes meals <strong>and</strong> rewards. Do not exceed this regardless of begging.</p>
+    </div>
+
+    <div class="card">
+      <h3>Meals</h3>
+      <ul>
+        <li><strong>Morning &amp; evening:</strong> 2 tablespoons of kibble each</li>
+        <li><strong>Evening meal only:</strong> also include a <strong>Nuvet tablet</strong></li>
+        <li>Remaining kibble throughout the day is for <strong>rewards only</strong></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Mealtime Routine</h3>
+      <ol>
+        <li>Prepare food — Ollie must <strong>sit to the side</strong> while you prepare it</li>
+        <li>Place bowl down and say <strong>"ok"</strong> to release him to eat</li>
+        <li><span class="no">❌</span> Do NOT reward bad behavior with food</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <h3>💧 Water</h3>
+      <ul>
+        <li>Ollie typically wants to drink water around <strong>11:00 AM</strong> — if nobody is home then, try to get him to drink before crating, or give him an <strong>ice cube</strong></li>
+        <li>In the evening he'll drink freely, especially after a <strong>collagen bone</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ── WALKS ── -->
+  <section>
+    <h2><span class="icon">🚶</span> Walk Routine</h2>
+
+    <div class="card">
+      <h3>Before You Go</h3>
+      <p>Use the <strong>harness</strong>, not the collar, for walks.</p>
+    </div>
+
+    <div class="alert">
+      <h3>When NOT to walk</h3>
+      <ul>
+        <li><span class="no">❌</span> Raining</li>
+        <li><span class="no">❌</span> Too hot outside</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Walk Rules</h3>
+      <ul>
+        <li><span class="no">❌</span> No marking or excessive sniffing — sniffing is only allowed on grass for potty and poo</li>
+        <li><span class="no">❌</span> Do not let him greet every dog</li>
+        <li><strong>Command</strong> him to go potty immediately at the start of the walk</li>
+        <li>Walks are normally <strong>15 minutes</strong> — on longer walks, he may go again at the end</li>
+        <li>If he's very excited or happy, he may poo <strong>twice or more</strong> — bring extra bags</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>If Ollie Stops Walking</h3>
+      <ul>
+        <li><span class="no">❌</span> Do NOT pick him up</li>
+        <li>Say <strong>"come on"</strong> or <strong>"let's go"</strong></li>
+        <li><span class="yes">✓</span> Reward with 1 kibble when he continues</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>🧼 After the Walk</h3>
+      <p style="margin-bottom:10px;">Ask for <strong>"paw"</strong> to wipe his feet. He may be hyper — to calm him down:</p>
+      <ol>
+        <li>Say <strong>"place"</strong> → send him to his spot</li>
+        <li>Say <strong>"down"</strong> → lie down</li>
+        <li><span class="yes">✓</span> Reward with 1 kibble</li>
+      </ol>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ── POTTY ── -->
+  <section>
+    <h2><span class="icon">🌿</span> Potty</h2>
+
+    <div class="card">
+      <h3>Off-Walk Potty</h3>
+      <p>Any time Ollie needs to go outside of a scheduled walk, take him to an <strong>outdoor setting</strong> — e.g. a balcony. Do not let him go indoors.</p>
+    </div>
+
+    <div class="card">
+      <h3>Commands</h3>
+      <ul>
+        <li>Say <strong>"potty"</strong> → he should pee</li>
+        <li>Say <strong>"poo"</strong> → he should poop</li>
+      </ul>
+      <div class="tip">After command: stand still in one spot, wait ~1 minute. If nothing happens → continue walking.</div>
+      <div class="tip" style="margin-top:8px;">🌿 Ollie only goes on <strong>grass patches</strong> or <strong>pee pads</strong> — guide him to one before giving the command.</div>
+    </div>
+    <div class="card">
+      <h3>⚠️ Potty Accidents</h3>
+      <p style="margin-bottom:10px;">Watch for these triggers — act before an accident happens:</p>
+      <ul>
+        <li>Too hyper / overstimulated</li>
+        <li>Drank a lot of water recently</li>
+        <li>Just came out of a long crate session</li>
+        <li>Sitting by / pawing at the balcony door</li>
+      </ul>
+      <div class="tip" style="margin-top:12px;">If he does have an accident: <strong>immediately</strong> take him to the potty area and say <strong>"go potty"</strong> — don't wait, don't scold, just redirect.</div>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ── DOS AND DONTS ── -->
+  <section>
+    <h2><span class="icon">✅</span> Do's &amp; Don'ts</h2>
+
+    <div class="card">
+      <h3 style="color:var(--green);">✅ Do's</h3>
+      <ul>
+        <li>Speak in a <strong>calm tone</strong> around him</li>
+        <li>Reward good behavior <strong>occasionally</strong></li>
+        <li>Ignore him when whining and pawing from the crate — if his needs have been met</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3 style="color:var(--red);">❌ Don'ts</h3>
+      <ul>
+        <li><strong>Aggressive play</strong> will wind him up and make him hyper — keep play calm</li>
+        <li>Anything within Ollie's reach he <strong>will</strong> try to chew or play with — keep bags, controllers, socks, and similar items out of range</li>
+      </ul>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ── HOUSE RULES ── -->
+  <section>
+    <h2><span class="icon">🏠</span> House Rules</h2>
+
+    <div class="card">
+      <ul>
+        <li>Always keep the <strong>leash on indoors</strong></li>
+        <li><span class="no">❌</span> No jumping on or off furniture</li>
+        <li>Not supervised → <strong>crate</strong></li>
+        <li>You're busy → <strong>crate</strong></li>
+        <li>Only reward <strong>good behavior</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ── CRATE ── -->
+  <section>
+    <h2><span class="icon">📦</span> Crate Rules</h2>
+
+    <div class="card">
+      <ol>
+        <li>Say <strong>"crate"</strong></li>
+        <li>Reward with <strong>1 kibble</strong> once he's inside</li>
+      </ol>
+      <div class="tip">Use the crate any time nobody is watching him or you're occupied with something else.</div>
+    </div>
+  </section>
+
+  <hr />
+
+  <!-- ── COMMAND CHEAT SHEET ── -->
+  <section>
+    <h2><span class="icon">🧠</span> Command Cheat Sheet</h2>
+    <p style="margin-bottom:14px; color:var(--muted); font-size:0.95rem;">Tap any command to see what it means.</p>
+
+    <details>
+      <summary><span><span class="cmd-tag">sit</span> Sit</span></summary>
+      <div class="cmd-body"><p class="meaning">Sit calmly before any action (meals, doorways, treats).</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">down</span> Down</span></summary>
+      <div class="cmd-body"><p class="meaning">Lie down in a calm position.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">wait</span> Wait</span></summary>
+      <div class="cmd-body"><p class="meaning">Pause and hold position until released with "ok".</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">stay</span> Stay</span></summary>
+      <div class="cmd-body"><p class="meaning">Hold his current position until you return or release him.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">come</span> Come / Come Back</span></summary>
+      <div class="cmd-body"><p class="meaning">Return to you immediately.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">let's go</span> Let's Go</span></summary>
+      <div class="cmd-body"><p class="meaning">Resume walking. Use when he stops on a walk.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">place</span> Place</span></summary>
+      <div class="cmd-body"><p class="meaning">Go to his designated spot (bed/mat). Follow with "down" to settle.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">crate</span> Crate</span></summary>
+      <div class="cmd-body"><p class="meaning">Go into his crate. Reward with 1 kibble once inside.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">paw</span> Paw</span></summary>
+      <div class="cmd-body"><p class="meaning">Lift a paw. Used after walks to wipe his feet.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">go potty</span> Go Potty / Go Poo</span></summary>
+      <div class="cmd-body"><p class="meaning">Eliminate on command. Stand still and wait ~1 min after saying it.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">off</span> Off / No Jump</span></summary>
+      <div class="cmd-body"><p class="meaning">Get off a surface or stop jumping on people or furniture.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">no</span> No</span></summary>
+      <div class="cmd-body"><p class="meaning">General correction — stop what you're doing.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">no more</span> No More</span></summary>
+      <div class="cmd-body"><p class="meaning">This activity or treats are finished. Used to clearly end something.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">no bite</span> No Bite</span></summary>
+      <div class="cmd-body"><p class="meaning">Stop mouthing or nipping.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">good dog</span> Good Dog / Bad Dog</span></summary>
+      <div class="cmd-body"><p class="meaning">Behavior markers. "Good dog" reinforces correct behavior; "bad dog" marks an unwanted action.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">rollover</span> Rollover</span></summary>
+      <div class="cmd-body"><p class="meaning">Fun trick — roll over onto his back.</p></div>
+    </details>
+
+    <details>
+      <summary><span><span class="cmd-tag">take it</span> Take It</span></summary>
+      <div class="cmd-body"><p class="meaning">Ollie will take a treat gently from your hand.</p></div>
+    </details>
+
+    <div style="margin-top: 14px;">
+      <p style="font-size:0.85rem; color:var(--muted); margin-bottom:8px;">All commands at a glance:</p>
+      <div class="badge-row">
+        <span class="badge">good dog</span><span class="badge">bad dog</span><span class="badge">no</span>
+        <span class="badge">no jump</span><span class="badge">no more</span><span class="badge">no bite</span>
+        <span class="badge">off</span><span class="badge">paw</span><span class="badge">sit</span>
+        <span class="badge">down</span><span class="badge">wait</span><span class="badge">let's go</span>
+        <span class="badge">come back</span><span class="badge">go potty</span><span class="badge">go poo</span>
+        <span class="badge">rollover</span><span class="badge">stay</span><span class="badge">place</span>
+        <span class="badge">crate</span><span class="badge">come</span><span class="badge">take it</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>Made with ❤️ for Ollie 🐾</footer>
+
+</body>
+</html>
